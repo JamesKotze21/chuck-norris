@@ -4,7 +4,6 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import Categories from './components/category/Categories';
 import JokeComponent from './components/joke/JokeComponent';
 import JokeList from './components/jokeList/JokeList';
-import {saveJoke, deleteSelectedJoke} from './utils/JokePersistanceUtils'
 
 const client = new ApolloClient({
 	uri: "http://localhost:5000/",
@@ -20,7 +19,6 @@ const client = new ApolloClient({
 function App() {
 
 	const [selectedCategory, setSelectedCategory] = useState();
-	const [savedJokes, setSavedJokes] = useState([]);
 	const [selectedJoke, setSelectedJoke] = useState();
 
 	return (
@@ -43,8 +41,7 @@ function App() {
 									<JokeComponent
 										selectedCategory={selectedCategory}
 										selectedJoke={selectedJoke}
-										saveJoke={(newJoke) => {saveJoke(savedJokes, setSavedJokes, newJoke)}}
-										deleteJoke={() => {deleteSelectedJoke(savedJokes, setSavedJokes, selectedJoke, setSelectedJoke)}}
+										resetJokeSelection={() => {setSelectedJoke()}}
 									/>
 								</div>
 							</div>
@@ -52,7 +49,6 @@ function App() {
 								<div className="col-xs-12">
 									<JokeList
 										selectedJoke={selectedJoke}
-										savedJokes={savedJokes}
 										setSelectedJoke={(joke) => {setSelectedJoke(joke)}}
 										resetCategorySelection={() => {setSelectedCategory()}}
 									/>

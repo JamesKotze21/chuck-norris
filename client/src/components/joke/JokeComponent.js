@@ -4,12 +4,12 @@ import RandomJoke from './RandomJoke';
 import NoJoke from './NoJoke';
 import { buildJokeQuery } from '../../queries/JokeQueries';
 
-export default function JokeComponent({selectedJoke, selectedCategory, saveJoke, deleteJoke}) {
+export default function JokeComponent({selectedJoke, selectedCategory, resetJokeSelection}) {
     // joke selected from saved jokes list
     if (selectedJoke) {
         return <SavedJoke
             selectedJoke={selectedJoke}
-            deleteJoke={deleteJoke}
+            resetJokeSelection={resetJokeSelection}
         />
     }
 
@@ -17,7 +17,6 @@ export default function JokeComponent({selectedJoke, selectedCategory, saveJoke,
     if (selectedCategory) {
         return <RandomJoke
             query={buildJokeQuery(selectedCategory)}
-            saveJoke={saveJoke}
         />
     }
 

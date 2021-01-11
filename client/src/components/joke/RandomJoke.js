@@ -3,8 +3,9 @@ import { useQuery } from '@apollo/client';
 import { Card, Button } from '../StyledComp';
 import LoadingJoke from './LoadingJoke';
 import Joke from '../../models/Joke';
+import { saveJoke } from '../../redux/Actions';
 
-export default function RandomJoke({saveJoke, query}) {
+export default function RandomJoke({query}) {
     
 	const {loading, error, data, refetch} = useQuery(query.query, query.options);
 
@@ -20,7 +21,7 @@ export default function RandomJoke({saveJoke, query}) {
             <div className="card-body">
                 <p className="card-text">{value}</p>
                 {categoriesText}
-                <Button className="btn btn-success" onClick={() => {saveJoke(new Joke(data.anyJoke))}}>Save</Button>
+                <Button className="btn btn-success" onClick={() => {saveJoke(new Joke(data.anyJoke.id, data.anyJoke.value, data.anyJoke.categories))}}>Save</Button>
                 <Button className="btn btn-primary" onClick={() => {refetch()}}>New Joke</Button>
             </div>
         </Card>
