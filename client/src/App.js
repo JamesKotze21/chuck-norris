@@ -1,27 +1,27 @@
-import React, { useState } from "react";
-import { ApolloProvider, ApolloClient, InMemoryCache} from '@apollo/client';
+import React, { useState } from 'react';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 
-import Categories from "./components/category/Categories";
-import Joke from "./components/joke/Joke";
-import JokeList from "./components/jokeList/JokeList";
+import Categories from './components/category/Categories';
+import JokeComponent from './components/joke/JokeComponent';
+import JokeList from './components/jokeList/JokeList';
+import {saveJoke, deleteSelectedJoke} from './utils/JokePersistanceUtils'
 
-const defaultOptions: DefaultOptions = {
-	watchQuery: {
-		fetchPolicy: 'no-cache',
-		errorPolicy: 'ignore',
-	}
-}
 const client = new ApolloClient({
 	uri: "http://localhost:5000/",
 	cache: new InMemoryCache(),
-	defaultOptions: defaultOptions
+	defaultOptions: {
+		watchQuery: {
+			fetchPolicy: 'no-cache',
+			errorPolicy: 'ignore',
+		}
+	}
 });
 
 function App() {
 
 	const [selectedCategory, setSelectedCategory] = useState();
 	const [savedJokes, setSavedJokes] = useState([]);
-	const [selectedJokeId, setSelectedJokeId] = useState();
+	const [selectedJoke, setSelectedJoke] = useState();
 
 	return (
 		<ApolloProvider client={client}>
@@ -32,7 +32,7 @@ function App() {
 						<Categories
 							selectedCategory={selectedCategory}
 							setSelectedCategory={(category) => {setSelectedCategory(category)}}
-							setSelectedJokeId={(jokeId) => {setSelectedJokeId(jokeId)}}
+							resetJokeSelection={() => {setSelectedJoke()}}
 						/>
 					</div>
 
@@ -40,23 +40,21 @@ function App() {
 						<div className="container-fluid">
 							<div className="row align-items-start">
 								<div className="col-xs-12">
-									<Joke
+									<JokeComponent
 										selectedCategory={selectedCategory}
-										selectedJokeId={selectedJokeId}
-										savedJokes={savedJokes}
-										setSavedJokes={(jokes) => {setSavedJokes(jokes)}}
-										setSelectedJokeId={(jokeId) => {setSelectedJokeId(jokeId)}}
+										selectedJoke={selectedJoke}
+										saveJoke={(newJoke) => {saveJoke(savedJokes, setSavedJokes, newJoke)}}
+										deleteJoke={() => {deleteSelectedJoke(savedJokes, setSavedJokes, selectedJoke, setSelectedJoke)}}
 									/>
 								</div>
 							</div>
 							<div className="row align-items-end">
 								<div className="col-xs-12">
 									<JokeList
-										selectedJokeId={selectedJokeId}
+										selectedJoke={selectedJoke}
 										savedJokes={savedJokes}
-										setSavedJokes={(jokes) => {setSavedJokes(jokes)}}
-										setSelectedJokeId={(jokeId) => {setSelectedJokeId(jokeId)}}
-										setSelectedCategory={(category) => {setSelectedCategory(category)}}
+										setSelectedJoke={(joke) => {setSelectedJoke(joke)}}
+										resetCategorySelection={() => {setSelectedCategory()}}
 									/>
 								</div>
 							</div>

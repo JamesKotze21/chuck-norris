@@ -1,31 +1,18 @@
 import React from 'react'
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Card, Button } from '../StyledComp';
 import LoadingJoke from './LoadingJoke';
+import Joke from '../../models/Joke';
 
-export default function RandomJoke({savedJokes, setSavedJokes}) {
+export default function RandomJoke({saveJoke, query}) {
     
-	const JOKE_QUERY = gql`
-		query RandomJokeQuery {
-            anyJoke {
-                id,
-                value,
-                categories
-            }
-		}
-    `;
-
-	const { loading, error, data, refetch} = useQuery(JOKE_QUERY);
+	const {loading, error, data, refetch} = useQuery(query.query, query.options);
 
 	if (loading) return <LoadingJoke/>;
-	if (error) return <p>Error :(</p>;
+	if (error) console.error("Could not fetch a Joke");
 
-    let {value, categories, id} = data.anyJoke; 
+    let {value, categories} = data.anyJoke; 
     let categoriesText = categories ? <i><p>{categories.toString()}</p></i> : "";
-
-    function saveJoke() {
-        if (!savedJokes.some((joke) => joke.id === id)) setSavedJokes([...savedJokes, data.anyJoke]);
-    }
 
     return (
         <Card className="card">
@@ -33,7 +20,7 @@ export default function RandomJoke({savedJokes, setSavedJokes}) {
             <div className="card-body">
                 <p className="card-text">{value}</p>
                 {categoriesText}
-                <Button className="btn btn-success" onClick={saveJoke}>Save</Button>
+                <Button className="btn btn-success" onClick={() => {saveJoke(new Joke(data.anyJoke))}}>Save</Button>
                 <Button className="btn btn-primary" onClick={() => {refetch()}}>New Joke</Button>
             </div>
         </Card>

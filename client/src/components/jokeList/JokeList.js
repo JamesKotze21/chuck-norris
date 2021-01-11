@@ -1,7 +1,8 @@
 import React from 'react'
 import JokesListItem from './JokesListItem'
 
-export default function JokeList({selectedJokeId, savedJokes, setSelectedJokeId, setSelectedCategory}) {
+export default function JokeList({selectedJoke, savedJokes, setSelectedJoke, resetCategorySelection}) {
+
 	return (
 		<div className="list-group">
 			{
@@ -9,9 +10,9 @@ export default function JokeList({selectedJokeId, savedJokes, setSelectedJokeId,
 					<JokesListItem
                         key={joke.id}
 						joke={joke}
-						setSelectedJokeId={setSelectedJokeId}
-						setSelectedCategory={setSelectedCategory}
-						isSelected={selectedJokeId===joke.id}
+						setSelectedJoke={setSelectedJoke}
+						resetCategorySelection={resetCategorySelection}
+						isSelected={selectedJoke && selectedJoke.id === joke.id}
 					/>
 				))
 			}
