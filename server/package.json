@@ -4,8 +4,8 @@
   "description": "GraphQL server for the chuck norris jokes app",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon src/server.js",
-    "server": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "server": "node src/server.js",
     "client": "npm start --prefix ../client",
     "concurrent": "concurrently \"npm run server\" \"npm run client\""
   },
