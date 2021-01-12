@@ -1,20 +1,10 @@
 import React, { useState } from 'react';
-import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client';
 
 import Categories from './components/category/Categories';
 import JokeComponent from './components/joke/JokeComponent';
 import JokeList from './components/jokeList/JokeList';
-
-const client = new ApolloClient({
-	uri: "http://localhost:5000/",
-	cache: new InMemoryCache(),
-	defaultOptions: {
-		watchQuery: {
-			fetchPolicy: 'no-cache',
-			errorPolicy: 'ignore',
-		}
-	}
-});
+import { client } from './utils/apolloUtil'
 
 function App() {
 

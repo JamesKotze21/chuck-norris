@@ -3,14 +3,14 @@ import { useQuery } from '@apollo/client';
 import { Card, Button } from '../StyledComp';
 import LoadingJoke from './LoadingJoke';
 import Joke from '../../models/Joke';
-import { saveJoke } from '../../redux/Actions';
+import { saveJoke } from '../../redux/actions';
 
 export default function RandomJoke({query}) {
     
 	const {loading, error, data, refetch} = useQuery(query.query, query.options);
 
 	if (loading) return <LoadingJoke/>;
-	if (error) console.error("Could not fetch a Joke");
+    if (error) return <p>Could not fetch a Joke</p>;
 
     let {value, categories} = data.anyJoke; 
     let categoriesText = categories ? <i><p>{categories.toString()}</p></i> : "";

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Button } from '../StyledComp';
-import { deleteJoke } from '../../redux/Actions';
+import { deleteJoke } from '../../redux/actions';
 
 export default function SavedJoke({ selectedJoke, resetJokeSelection }) {
 

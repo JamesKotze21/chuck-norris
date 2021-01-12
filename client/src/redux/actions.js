@@ -1,5 +1,5 @@
-import store from './Store';
-import { SAVE_JOKE, DELETE_JOKE} from './ActionTypes';
+import store from './store';
+import { SAVE_JOKE, DELETE_JOKE} from './actionTypes';
 
 export function saveJoke(joke) {
 	store.dispatch({

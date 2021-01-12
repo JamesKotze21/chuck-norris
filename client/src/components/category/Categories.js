@@ -8,7 +8,7 @@ export default function Categories({selectedCategory, setSelectedCategory, reset
 	const { loading, error, data } = useQuery(CATEGORIES_QUERY);
 
 	if (loading) return <p>Loading...</p>;
-	if (error) console.error("Could not fetch joke categories");
+	if (error) return <p>Could not fetch joke categories</p>;
 	
 	return (
 		<div className="list-group">

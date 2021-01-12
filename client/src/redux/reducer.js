@@ -1,4 +1,4 @@
-import * as actions from './ActionTypes';
+import * as actions from './actionTypes';
 
 export default function Reducer(state = [], action) {
     switch (action.type) {
